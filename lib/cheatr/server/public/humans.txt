@@ -1,0 +1,13 @@
+# Cheatr
+
+## TEAM
+
+    Ernesto García (@gnapse) -- Creator
+
+## THANKS
+
+    Chris Wanstrath (@defunkt) for the original idea (https://github.com/defunkt/cheat)
+
+## TECHNOLOGY
+
+    Ruby, Sinatra, Git, Markdown

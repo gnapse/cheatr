@@ -1,0 +1,108 @@
+#!/usr/bin/env ruby
+
+require "slop"
+require "cheatr"
+
+def check(condition, message)
+  unless condition
+    $stderr.puts message
+    exit
+  end
+end
+
+unless ARGV.first == 'config'
+  check Cheatr::Client.server, "Run 'cheatr config server <location>' to set the remote cheatr server."
+end
+
+Slop.parse help: true do
+
+  command :server do
+    banner 'Usage: cheatr server [options] [repository-path]'
+    on 'p', 'port=', 'The port where the server will listen to.'
+    run do |opts, args|
+      check args.length <= 1, opts
+      repository = args.first || Dir.pwd
+      Cheatr::Server.run(repository, opts)
+    end
+  end
+
+  command :show do
+    banner 'Usage: cheatr show [options] <sheet-name>'
+    on 'r', 'remote', 'Forces retrieving contents from remote, ignoring the cache, if any.'
+    run do |opts, args|
+      check args.length == 1, opts
+      name = args.first
+      if name.include?('*')
+        Cheatr::Client.search_sheets(name)
+      else
+        Cheatr::Client.display_sheet(name, ignore_cache: opts[:remote])
+      end
+    end
+  end
+
+  command :browse do
+    banner 'Usage: cheatr browse [query]'
+    run do |opts, args|
+      check args.length <= 1, opts
+      Cheatr::Client.browse(args.first)
+    end
+  end
+
+  command :search do
+    banner 'Usage: cheatr search <query>'
+    run do |opts, args|
+      check args.length == 1, opts
+      Cheatr::Client.search_sheets(args.first)
+    end
+  end
+
+  command :all do
+    banner 'Usage: cheatr all'
+    run do |opts, args|
+      check args.length == 0, opts
+      Cheatr::Client.search_sheets
+    end
+  end
+
+  command :edit do
+    banner 'Usage: cheatr edit [options] <sheet-name>'
+    on 'y', 'yes', 'Do not ask for confirmation after editing.'
+    run do |opts, args|
+      check args.length == 1, opts
+      Cheatr::Client.edit_sheet(args.first, skip_confirmation: opts[:yes])
+    end
+  end
+
+  command :fetch do
+    banner 'Usage: cheatr fetch [options] <sheet-name>+'
+    on 'q', 'quiet', 'Do not print anything to standard output. Overrides --errors.'
+    on 'e', 'errors', 'Print error messages only.'
+    run do |opts, args|
+      Cheatr::Client.fetch_sheets(args, opts)
+    end
+  end
+
+  command :clear do
+    banner 'Usage: cheatr clear [options] [sheet-name]'
+    on 'a', 'all', 'Clear all cached cheat sheets. Requires confirmation by default.'
+    on 'y', 'yes', 'Do not ask for confirmation for clearing the cache completely.'
+    on 'q', 'quiet', 'Do not print anything to standard output. Implies --yes, skipping confirmation.'
+    run do |opts, args|
+      if opts[:all]
+        Cheatr::Client.clear_cache(:all, skip_confirmation: opts[:yes], quiet: opts[:quiet])
+      else
+        check(args.length == 1, opts)
+        Cheatr::Client.clear_cache(args.first, quiet: opts[:quiet])
+      end
+    end
+  end
+
+  command :config do
+    banner 'Usage: cheatr config <param> <value>'
+    run do |opts, args|
+      check args.length == 2, opts
+      Cheatr::Client.set_config(args.first => args.last)
+    end
+  end
+
+end
