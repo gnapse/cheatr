@@ -11,14 +11,14 @@ a command line client utility.
 
 In the context of cheatr, a cheat sheet is a small document with quick tips and
 hints on a concrete and specific topic.  Typically it contains notes intended
-to aid one's memory, like listing common and useful shortcuts used on
-a program, quick and easy tips on how to use a library, or the command line
+to aid one's memory, like listing common and useful shortcuts used on a
+program, quick and easy tips on how to use a library, or the command line
 options of a shell command, for instance.
 
-Cheatr however enforces very little on the contents of the cheat sheets in
-a repository.  The above specification is just a guideline on the intended use
-of this tool, but in practice you can use it to store and maintain any
-collection of text documents in it.
+Cheatr however enforces very little on the contents of the cheat sheets in a
+repository.  The above specification is just a guideline on the intended use of
+this tool, but in practice you can use it to store and maintain any collection
+of text documents in it.
 
 Further down this document you'll find more information about the format of
 [cheat sheet contents](#cheat-sheet-contents).
@@ -29,8 +29,8 @@ Further down this document you'll find more information about the format of
 
 ## Usage
 
-Cheatr retrieves cheat sheets from a remote server, so we need to tell
-cheatr where to look.
+Cheatr retrieves cheat sheets from a remote server, so we need to tell cheatr
+where to look.
 
     $ cheatr config server cheatr.gnapse.com
 
@@ -81,8 +81,8 @@ possibilities. Type `cheatr --help` or `cheatr <command> --help` for details.
 
 This gem includes the server side component as well, so anyone can host their
 own cheat sheets service.  This server offers the basic API-like calls to
-query, retrieve and modify cheat sheet contents.  You can start a cheatr
-server with the following command:
+query, retrieve and modify cheat sheet contents.  You can start a cheatr server
+with the following command:
 
     $ cheatr server /path/to/cheatr/repository
 
@@ -128,9 +128,9 @@ to this convention, and embrace it.
 ### Cheat sheet hyperlinks
 
 In addition to standard markdown syntax, cheatr supports a minor custom
-extension, that becomes useful when browsing a cheatr server in a web
-browser.  This is related to linking in between cheat sheets, as hinted in the
-previous section.
+extension, that becomes useful when browsing a cheatr server in a web browser.
+This is related to linking in between cheat sheets, as hinted in the previous
+section.
 
 This is best shown with an example.
 
@@ -155,7 +155,8 @@ new related topics to continue "browsing" and learning.
 
 Feel free to dive into the code to understand more about how cheatr works, or
 just for fun.  Please note that this is a very young project with very rough
-edges still.  Issues reports and pull requests are welcome!
+edges still.  Issue reports, feature and design suggestions, as well as pull
+requests, are all welcome!
 
 In case you decide to step in:
 
@@ -164,6 +165,11 @@ In case you decide to step in:
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+And don't forget to take a look at the [open issues][] in case you need some
+inspiration on what to work on.
+
+[open issues]: https://github.com/gnapse/cheatr/issues
 
 ## Thanks
 
