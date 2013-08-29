@@ -16,10 +16,10 @@ module Cheatr::Server
     # Processes the given text as markdown, additionally processing cheatr links as well.
     #
     def md(text)
-      markdown text.
-        gsub(/{{([a-z]+([\.\-\_][a-z]+)*)}}/, '[\1](/\1)').             # {{name}}           -> [name](/name)
-        gsub(/{{([^\|}]+)\|([a-z]+([\.\-\_][a-z]+)*)}}/, '[\1](/\2)').  # {{link text|name}} -> [link text](/name)
-        to_s
+      markdown text
+        .gsub(/{{([a-z]+([\.\-\_][a-z]+)*)}}/, '[\1](/\1)')             # {{name}}           -> [name](/name)
+        .gsub(/{{([^\|}]+)\|([a-z]+([\.\-\_][a-z]+)*)}}/, '[\1](/\2)')  # {{link text|name}} -> [link text](/name)
+        .to_s
     end
 
     def text(output, opts = {})
@@ -38,7 +38,7 @@ module Cheatr::Server
       logger.info "Rendering template #{name}"
       output = erb :"#{name}.md", layout: false
       if html?
-        erb md(output), layout: :"layout.html"
+        erb md(output), layout: "layout.html".to_sym
       else
         output
       end

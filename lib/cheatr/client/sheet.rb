@@ -97,7 +97,9 @@ module Cheatr::Client
     #
     def fetch_cache
       @remote = false
-      File.read(cache_file) rescue nil
+      File.read(cache_file)
+    rescue
+      nil
     end
 
     #

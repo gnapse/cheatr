@@ -35,7 +35,7 @@ module Cheatr::Server
         git.add(file_name)
         if git.status[file_name].type
           git.commit "#{new? ? 'Create' : 'Update'} #{name}"
-          self.reload
+          reload
         end
       end
 
